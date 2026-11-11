@@ -22,7 +22,7 @@ nicht bereit.
 
 ## Fertige BIN-Datei herunterladen
 
-Im [Release wmbus-v0.1.0](https://github.com/E-Mixer/firmware/releases/tag/wmbus-v0.1.0)
+Im [Release wmbus-v0.1.0](https://github.com/E-Mixer/Bruce-Wireless-M-Bus-Firmware/releases/tag/wmbus-v0.1.0)
 liegt das fertig kompilierte Komplettimage
 `Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin`.
 Es ist dieselbe Datei, mit der der Empfang auf dem LilyGO T-Embed CC1101 Plus
@@ -39,8 +39,8 @@ offizielle Bruce-Commit `a59213f3ec6cd302fa32c2042b2700c9c24d991a`.
 Quellcode herunterladen und in das Verzeichnis wechseln:
 
 ```sh
-git clone --branch feature/wireless-mbus https://github.com/E-Mixer/firmware.git
-cd firmware
+git clone --branch feature/wireless-mbus https://github.com/E-Mixer/Bruce-Wireless-M-Bus-Firmware.git
+cd Bruce-Wireless-M-Bus-Firmware
 ```
 
 Der lokale Build wurde mit **Python 3.13**, **PlatformIO 6.2.0** und dem Ziel

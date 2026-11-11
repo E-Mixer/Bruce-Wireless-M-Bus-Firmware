@@ -1,12 +1,12 @@
 ![Bruce Main Menu](./media/pictures/bruce_banner.jpg)
 
-# :shark: Bruce
+# :shark: Bruce Wireless M-Bus Firmware
 
 > **Experimental Wireless M-Bus development fork.** Native receive-only T1/C1
 > support for CC1101; reception tested on a LilyGO T-Embed CC1101 Plus.
 > [English instructions](docs/wireless-mbus.md) |
 > [Deutsche Anleitung](docs/wireless-mbus.de.md).
-> [Download the tested BIN for LilyGO T-Embed CC1101 Plus](https://github.com/E-Mixer/firmware/releases/tag/wmbus-v0.1.0).
+> [Download the tested BIN for LilyGO T-Embed CC1101 Plus](https://github.com/E-Mixer/Bruce-Wireless-M-Bus-Firmware/releases/tag/wmbus-v0.1.0).
 
 Bruce is a versatile ESP32 firmware packed with offensive-security tools, built to make Red Team operations fast and portable.
 

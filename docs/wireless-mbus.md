@@ -19,7 +19,7 @@ Bruce's current JavaScript interface does not provide the packet reception neede
 
 ## Download the prebuilt BIN
 
-[Release wmbus-v0.1.0](https://github.com/E-Mixer/firmware/releases/tag/wmbus-v0.1.0)
+[Release wmbus-v0.1.0](https://github.com/E-Mixer/Bruce-Wireless-M-Bus-Firmware/releases/tag/wmbus-v0.1.0)
 provides the ready-to-flash merged image
 `Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin`.
 It is the same binary used for the successful reception test on a LilyGO
@@ -33,8 +33,8 @@ Use this fork's `feature/wireless-mbus` branch. The original upstream base is
 `a59213f3ec6cd302fa32c2042b2700c9c24d991a`.
 
 ```sh
-git clone --branch feature/wireless-mbus https://github.com/E-Mixer/firmware.git
-cd firmware
+git clone --branch feature/wireless-mbus https://github.com/E-Mixer/Bruce-Wireless-M-Bus-Firmware.git
+cd Bruce-Wireless-M-Bus-Firmware
 ```
 
 The tested local build used Python 3.13, PlatformIO 6.2.0 and the
