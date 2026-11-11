@@ -17,6 +17,16 @@ Bruce's current JavaScript interface does not provide the packet reception neede
 - Other boards and external CC1101 arrangements have not been tested by this project.
 - The implemented receiver and decoder have host tests; see below.
 
+## Download the prebuilt BIN
+
+[Release wmbus-v0.1.0](https://github.com/E-Mixer/firmware/releases/tag/wmbus-v0.1.0)
+provides the ready-to-flash merged image
+`Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin`.
+It is the same binary used for the successful reception test on a LilyGO
+T-Embed CC1101 Plus. The **Assets** include installation instructions and SHA-256
+checksums. Write the full image at address `0x0`. The sources corresponding to
+this binary are available at tag `wmbus-v0.1.0`; the feature branch is for development.
+
 ## Build and installation
 
 Use this fork's `feature/wireless-mbus` branch. The original upstream base is
@@ -50,7 +60,7 @@ For a normal standalone ESP32-S3 installation, write the merged image at address
 `0x0` using esptool. Never write the app-only image at `0x0`.
 Choose the COM port that belongs to your device.
 
-After checking the installation notes below, a standalone flash example is:
+A standalone flash example is:
 
 ```powershell
 & .\.tools\venv\Scripts\python.exe -m pip install esptool --cache-dir .tools\pip-cache
@@ -60,11 +70,9 @@ $devicePort = 'COM7' # Replace with your device's port.
 
 Wait for the write verification to finish and then open the RF menu on the device.
 
-**Existing dualboot or launcher installations need their own installation method.**
-The merged image contains Bruce's standalone partition table; writing it can
-replace an existing partition layout. The hardware test for this project used a
-full internal-flash erase followed by standalone installation, removing the old
-dualboot and internal settings. A full erase is not a prerequisite of the RF app.
+The full image contains the bootloader, partition table and application for
+standalone Bruce on an ESP32-S3 with 16 MB flash. The documented hardware test
+used an internal-flash erase followed by a fresh Bruce installation.
 
 The build still reports warnings in existing Bruce/display/Bluetooth/audio code.
 Successful compilation is not evidence that every existing firmware function works.

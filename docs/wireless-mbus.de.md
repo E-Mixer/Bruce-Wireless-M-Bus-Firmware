@@ -20,6 +20,17 @@ nicht bereit.
 - Andere Boards und externe CC1101-Aufbauten wurden hier nicht auf Hardware getestet.
 - Für Decoder und Empfänger gibt es lokale C++-Tests; siehe unten.
 
+## Fertige BIN-Datei herunterladen
+
+Im [Release wmbus-v0.1.0](https://github.com/E-Mixer/firmware/releases/tag/wmbus-v0.1.0)
+liegt das fertig kompilierte Komplettimage
+`Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin`.
+Es ist dieselbe Datei, mit der der Empfang auf dem LilyGO T-Embed CC1101 Plus
+erfolgreich getestet wurde. Unter **Assets** findest du außerdem eine deutsche
+Installationsanleitung und SHA-256-Prüfsummen. Das Komplettimage wird ab Adresse
+`0x0` geschrieben. Die zu dieser BIN gehörenden Quellen stehen am Release-Tag
+`wmbus-v0.1.0` zum Download bereit; der Feature-Branch dient der Weiterentwicklung.
+
 ## Firmware bauen und installieren
 
 Verwende in diesem Fork den Branch **`feature/wireless-mbus`**. Grundlage ist der
@@ -57,8 +68,7 @@ Für eine normale Installation als einzige Firmware auf dem ESP32-S3 wird das
 Komplettimage mit esptool ab Adresse **`0x0`** geschrieben. Das reine App-Image darf
 **nicht** an Adresse `0x0` geschrieben werden. Wähle den COM-Port deines Geräts.
 
-Nach Prüfung der Installationshinweise unten ist dies ein Beispiel zum Flashen
-als einzelne Firmware:
+Beispiel zum Flashen als einzelne Firmware:
 
 ```powershell
 & .\.tools\venv\Scripts\python.exe -m pip install esptool --cache-dir .tools\pip-cache
@@ -69,13 +79,9 @@ $devicePort = 'COM7' # Durch den COM-Port deines Geräts ersetzen.
 Das Ende des Schreibvorgangs und die Datenprüfung abwarten. Anschließend das
 RF-Menü auf dem Gerät öffnen.
 
-**Bei vorhandenem Dualboot oder Launcher muss die Installationsmethode dazu passen.**
-Das Komplettimage enthält die Partitionstabelle für Bruce als einzelne Firmware
-und kann eine vorhandene andere Aufteilung ersetzen. Beim hier dokumentierten
-Hardwaretest wurde der interne Flash ausdrücklich vollständig gelöscht und
-anschließend nur Bruce installiert. Dadurch entfielen das bisherige Dualboot und
-die internen Einstellungen. Ein vollständiges Löschen ist keine grundsätzliche
-Voraussetzung der Empfangs-App.
+Das Komplettimage enthält Bootloader, Partitionstabelle und Anwendung für Bruce
+als einzelne Firmware auf dem ESP32-S3 mit 16 MB Flash. Beim dokumentierten
+Hardwaretest wurde der interne Flash gelöscht und Bruce anschließend neu installiert.
 
 Beim Build bleiben Warnungen aus vorhandenem Bruce-, Display-, Bluetooth- und
 Audiocode bestehen. Ein erfolgreicher Build bestätigt nicht alle Funktionen der
