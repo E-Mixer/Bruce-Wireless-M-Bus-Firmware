@@ -1,0 +1,57 @@
+Bruce Wireless M-Bus 0.1.0 - LilyGO T-Embed CC1101 Plus
+====================================================
+
+Datei: Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin
+Hardware: LilyGO T-Embed CC1101 Plus, ESP32-S3 mit 16 MB Flash.
+Build-Ziel: lilygo-t-embed-cc1101.
+
+Das ist ein Komplettimage mit Bootloader, Partitionstabelle und Anwendung.
+Es installiert Bruce als einzelne Firmware und wird ab Adresse 0x0 geschrieben.
+Die Datei ist identisch mit der auf dem Projektgerät getesteten Firmware.
+Der Gerätebesitzer hat einen sehr gut funktionierenden Funkempfang bestätigt.
+
+Installation unter Windows
+--------------------------
+1. Die BIN-Datei aus diesem Release herunterladen und den LilyGO per USB anschließen.
+2. Den COM-Port des LilyGO im Windows-Gerätemanager unter Anschlüsse ermitteln.
+3. PowerShell im Verzeichnis der heruntergeladenen Datei öffnen.
+4. Wenn esptool noch nicht vorhanden ist, eine lokale Python-Umgebung einrichten:
+
+   py -m venv .flash-tools
+   .\.flash-tools\Scripts\python.exe -m pip install esptool --cache-dir .flash-tools\pip-cache
+
+5. COM7 im folgenden Befehl durch den tatsächlichen Geräteport ersetzen:
+
+   .\.flash-tools\Scripts\python.exe -m esptool --chip esp32s3 --port COM7 write-flash 0x0 Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin
+
+6. Die Schreib- und Hashprüfung abwarten. Anschließend startet das Gerät neu.
+
+Prüfsumme
+---------
+   Get-FileHash .\Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin -Algorithm SHA256
+
+Das Ergebnis muss mit SHA256SUMS.txt aus diesem Release übereinstimmen.
+
+Empfang starten
+---------------
+Radio Frequency -> Wireless M-Bus -> Scan T1/C1 868.95.
+Falls erforderlich unter Radio Frequency -> Config den CC1101 als RF-Modul auswählen.
+Mit dem Drehrad ein Gerät auswählen und klicken, um Details anzuzeigen.
+In der Detailansicht pausiert der Empfang; Klicken oder Zurück setzt ihn fort.
+Zurück in der Scanansicht stoppt den Empfang und öffnet das App-Menü.
+Export devices to SD speichert eine Geräteübersicht; Clear results leert die Sitzung.
+
+Funktionsumfang und Teststand
+----------------------------
+Passiver T1-/C1-Empfang auf 868,95 MHz; C1-Formate A und B sind implementiert.
+Keine Sendefunktion, keine Schlüssel und keine Entschlüsselung in dieser App.
+Geräte-IDs, Metadaten, Hexdaten und unterstützte offene Messwerte werden angezeigt.
+Verschlüsselte Werte bleiben verschlüsselt. Die Tabelle hält höchstens 96 Geräte.
+Das SD-Exportformat ist JSONL mit dem letzten gültigen Telegramm je Gerät,
+keine lückenlose Aufzeichnung. Nicht alle Modi und SD-Funktionen sind einzeln
+auf Hardware bestätigt. Bestehende Compilerwarnungen aus Bruce/Bibliotheken bleiben.
+Die Firmware meldet sich intern weiterhin als Bruce dev / Homebrew.
+
+Anleitung: https://github.com/E-Mixer/firmware/blob/wmbus-v0.1.0/docs/wireless-mbus.de.md
+Quellcode: https://github.com/E-Mixer/firmware/tree/wmbus-v0.1.0
+Lizenz: AGPL-3.0-or-later; siehe LICENSE im zugehörigen Quellcode.

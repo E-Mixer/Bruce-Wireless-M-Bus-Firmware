@@ -1,0 +1,57 @@
+Bruce Wireless M-Bus 0.1.0 - LilyGO T-Embed CC1101 Plus
+====================================================
+
+File: Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin
+Hardware: LilyGO T-Embed CC1101 Plus, ESP32-S3 with 16 MB flash.
+Build target: lilygo-t-embed-cc1101.
+
+This is a full image containing the bootloader, partition table and application.
+It installs standalone Bruce and must be written at address 0x0.
+It is identical to the firmware tested on the project's device. The device owner
+reported very good radio reception.
+
+Windows installation
+--------------------
+1. Download the BIN from this release and connect the LilyGO over USB.
+2. Find its COM port in Windows Device Manager under Ports.
+3. Open PowerShell in the folder containing the downloaded BIN.
+4. If esptool is not installed, create a local Python environment:
+
+   py -m venv .flash-tools
+   .\.flash-tools\Scripts\python.exe -m pip install esptool --cache-dir .flash-tools\pip-cache
+
+5. Replace COM7 below with your actual device port:
+
+   .\.flash-tools\Scripts\python.exe -m esptool --chip esp32s3 --port COM7 write-flash 0x0 Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin
+
+6. Wait for writing and hash verification to finish. The device then restarts.
+
+Checksum
+--------
+   Get-FileHash .\Bruce-wMBus-0.1.0-LilyGO-T-Embed-CC1101-Plus-full.bin -Algorithm SHA256
+
+The result must match SHA256SUMS.txt from this release.
+
+Start reception
+---------------
+Radio Frequency -> Wireless M-Bus -> Scan T1/C1 868.95.
+If needed, select the CC1101 RF module under Radio Frequency -> Config first.
+Use the wheel to select a device and click for details. Reception pauses in the
+detail view; clicking or going back resumes it. Going back from the scan stops
+reception and returns to the app menu. Export devices to SD saves a device
+overview; Clear results resets the session.
+
+Features and validation
+-----------------------
+Passive T1/C1 reception at 868.95 MHz; C1 formats A and B are implemented.
+This app does not transmit, accept keys or decrypt values. It displays device IDs,
+metadata, hex data and supported unencrypted measurements. Protected values remain
+encrypted. The table holds up to 96 devices. SD export is JSONL containing the
+latest valid telegram per device, not continuous logging. Per-mode coverage and
+all SD operations have not been individually confirmed on hardware. Existing
+Bruce/dependency compiler warnings remain. The firmware still reports Bruce dev /
+Homebrew internally.
+
+Guide: https://github.com/E-Mixer/firmware/blob/wmbus-v0.1.0/docs/wireless-mbus.md
+Sources: https://github.com/E-Mixer/firmware/tree/wmbus-v0.1.0
+License: AGPL-3.0-or-later; see LICENSE in the corresponding sources.

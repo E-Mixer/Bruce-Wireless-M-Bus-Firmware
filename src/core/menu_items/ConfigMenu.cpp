@@ -1,4 +1,9 @@
 #include "ConfigMenu.h"
+#include <esp_ota_ops.h>
+#include <cstring>
+
+
+
 #include "../mykeyboard.h"
 #include "core/display.h"
 #include "core/i2c_finder.h"
@@ -9,6 +14,38 @@
 #ifdef HAS_RGB_LED
 #include "core/led_control.h"
 #endif
+
+namespace {
+// Only offer the existing Furi app; never change the partition table or flash it.
+const esp_partition_t *flipperPartition() {
+    const esp_partition_t *running = esp_ota_get_running_partition();
+    esp_partition_iterator_t it = esp_partition_find(
+        ESP_PARTITION_TYPE_APP, ESP_PARTITION_SUBTYPE_ANY, nullptr
+    );
+    while (it) {
+        const esp_partition_t *candidate = esp_partition_get(it);
+        esp_app_desc_t description = {};
+        if ((!running || candidate->address != running->address) &&
+            esp_ota_get_partition_description(candidate, &description) == ESP_OK &&
+            std::strncmp(description.project_name, "furi_esp32", sizeof(description.project_name)) == 0) {
+            esp_partition_iterator_release(it);
+            return candidate;
+        }
+        it = esp_partition_next(it);
+    }
+    return nullptr;
+}
+
+void bootFlipper() {
+    const esp_partition_t *target = flipperPartition();
+    // IDF validates the target image before updating the boot selection.
+    if (!target || esp_ota_set_boot_partition(target) != ESP_OK) {
+        displayError("Flipper boot failed");
+        return;
+    }
+    ESP.restart();
+}
+} // namespace
 
 /*********************************************************************
 **  Function: optionsMenu
@@ -43,6 +80,10 @@ void ConfigMenu::optionsMenu() {
 
         if (bruceConfig.devMode) {
             localOptions.push_back({"Dev Mode", [this]() { devMenu(); }});
+        }
+
+        if (flipperPartition()) {
+            localOptions.push_back({"Switch to Flipper", bootFlipper});
         }
 
         localOptions.push_back({"About", showDeviceInfo});
